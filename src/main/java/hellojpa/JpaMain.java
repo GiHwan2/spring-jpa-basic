@@ -5,8 +5,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-import java.util.List;
-
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -18,15 +16,13 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Member findMember = em.find(Member.class, 1L);
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(0)
-                    .setMaxResults(10)
-                    .getResultList();
+            Member member1 = new Member(150L, "A");
+            Member member2 = new Member(160L, "B");
 
-            for (Member member : result){
-                System.out.println("member.name = " + member.getName());
-            }
+            em.persist(member1);
+            em.persist(member2);
+
+            System.out.println("===============");
 
             tx.commit();
         } catch (Exception e){
